@@ -21,6 +21,11 @@ include $(INCLUDE_DIR)/host-build.mk
 
 HOST_CFLAGS += -Wno-error -fPIC -std=gnu17
 
+# elfutils otherwise adds the GNU ld-only --build-id option on Darwin.
+ifeq ($(HOST_OS),Darwin)
+HOST_CONFIGURE_VARS += ac_cv_buildid=yes
+endif
+
 HOST_CONFIGURE_ARGS += \
 	--disable-debuginfod \
 	--disable-libdebuginfod \
