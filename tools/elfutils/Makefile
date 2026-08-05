@@ -126,6 +126,7 @@ define Host/Configure
 	(cd $(HOST_BUILD_DIR); \
 		if ! grep -q 'gl_EARLY' configure.ac; then \
 			$(SED) '/AM_SILENT_RULES/a gl_EARLY' configure.ac; \
+			$(SED) '/gl_EARLY/a LT_INIT' configure.ac; \
 			$(SED) '/AC_PROG_CXX/a gl_INIT' configure.ac; \
 			$(SED) '/config\/Makefile/a AC_CONFIG_FILES([libgnu/Makefile])' configure.ac; \
 			$(SED) '/^SUBDIRS = /s/= /= libgnu /' Makefile.am; \
