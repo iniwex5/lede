@@ -25,6 +25,8 @@ HOST_CFLAGS += -Wno-error -fPIC -std=gnu17
 ifeq ($(HOST_OS),Darwin)
 HOST_CONFIGURE_VARS += ac_cv_buildid=yes
 HOST_CONFIGURE_ARGS += --disable-symbol-versioning
+HOST_CPPFLAGS += -I/usr/local/opt/argp-standalone/include
+HOST_LDFLAGS += -L/usr/local/opt/argp-standalone/lib
 endif
 
 HOST_CONFIGURE_ARGS += \
