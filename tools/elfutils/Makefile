@@ -95,6 +95,7 @@ ifeq ($(HOST_OS),Darwin)
   HOST_CPPFLAGS += -I$(shell brew --prefix gettext)/include
   HOST_LDFLAGS += -L$(shell brew --prefix gettext)/lib
   HOST_CONFIGURE_ARGS += --with-libintl-prefix=$(shell brew --prefix gettext)
+  ELFUTILS_DARWIN_CONFIG_FIXUP = $(SED) '/extern __typeof (name) aliasname/s/__attribute__.*/;/' lib/eu-config.h;
 endif
 
 HOST_CFLAGS += -Wno-error -fPIC -std=gnu17
@@ -134,6 +135,7 @@ define Host/Configure
 			$(SED) '/config\/Makefile/a AC_CONFIG_FILES([libgnu/Makefile])' configure.ac; \
 			$(SED) '/^SUBDIRS = /s/= /= libgnu /' Makefile.am; \
 		fi; \
+		$(ELFUTILS_DARWIN_CONFIG_FIXUP) \
 		AUTOM4TE=$(STAGING_DIR_HOST)/bin/autom4te \
 		AUTOCONF=$(STAGING_DIR_HOST)/bin/autoconf \
 		AUTOMAKE=$(STAGING_DIR_HOST)/bin/automake \
