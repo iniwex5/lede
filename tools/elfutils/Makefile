@@ -92,6 +92,9 @@ HOST_CPPFLAGS += "'-I$$$$(top_srcdir)/lib'"
 
 ifeq ($(HOST_OS),Darwin)
   HOST_CFLAGS += -I/opt/homebrew/include
+  HOST_CPPFLAGS += -I$(shell brew --prefix gettext)/include
+  HOST_LDFLAGS += -L$(shell brew --prefix gettext)/lib
+  HOST_CONFIGURE_ARGS += --with-libintl-prefix=$(shell brew --prefix gettext)
 endif
 
 HOST_CFLAGS += -Wno-error -fPIC -std=gnu17
