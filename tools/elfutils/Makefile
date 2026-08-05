@@ -122,4 +122,17 @@ HOST_CONFIGURE_VARS += \
 Hooks/HostConfigure/Pre := Host/Gnulib/Prepare $(Hooks/HostConfigure/Pre)
 Hooks/HostCompile/Pre := Host/Gnulib/Compile $(Hooks/HostCompile/Pre)
 
+define Host/Configure
+	(cd $(HOST_BUILD_DIR); \
+		AUTOM4TE=$(STAGING_DIR_HOST)/bin/autom4te \
+		AUTOCONF=$(STAGING_DIR_HOST)/bin/autoconf \
+		AUTOMAKE=$(STAGING_DIR_HOST)/bin/automake \
+		ACLOCAL=$(STAGING_DIR_HOST)/bin/aclocal \
+		AUTOHEADER=$(STAGING_DIR_HOST)/bin/autoheader \
+		LIBTOOLIZE='$(STAGING_DIR_HOST)/bin/libtoolize --install' \
+		M4=$(STAGING_DIR_HOST)/bin/m4 \
+		$(STAGING_DIR_HOST)/bin/autoreconf -v -f -i -s -B $(STAGING_DIR_HOST)/share/aclocal -I m4 -I .)
+	$(call Host/Configure/Default)
+endef
+
 $(eval $(call HostBuild))
