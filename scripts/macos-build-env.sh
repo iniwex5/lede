@@ -17,9 +17,9 @@ gnu_paths=(
 	"$brew_prefix/opt/make/libexec/gnubin"
 )
 
-for path in "${gnu_paths[@]}"; do
-	if [ -d "$path" ]; then
-		PATH="$path:$PATH"
+for gnu_path in "${gnu_paths[@]}"; do
+	if [ -d "$gnu_path" ]; then
+		PATH="$gnu_path:$PATH"
 	fi
 done
 
