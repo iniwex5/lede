@@ -513,6 +513,18 @@ define Device/fzs_5gcpe-p3
 endef
 TARGET_DEVICES += fzs_5gcpe-p3
 
+define Device/fzs_5gcpe-p3-512m
+  $(Device/fzs_5gcpe-p3)
+  DEVICE_VARIANT := 512MiB NAND
+  DEVICE_DTS := mt7981b-fzs-5gcpe-p3-512m
+  DEVICE_PACKAGES += kmod-usb-acm kmod-usb-serial-option \
+	kmod-usb-serial-qualcomm kmod-usb-net-qmi-wwan \
+	kmod-usb-net-cdc-mbim uqmi umbim \
+	kmod-mhi-bus kmod-mhi-pci-generic kmod-mhi-net \
+	kmod-mhi-wwan-ctrl kmod-mhi-wwan-mbim
+endef
+TARGET_DEVICES += fzs_5gcpe-p3-512m
+
 define Device/glinet_gl-mt2500
   DEVICE_VENDOR := GL.iNet
   DEVICE_MODEL := GL-MT2500

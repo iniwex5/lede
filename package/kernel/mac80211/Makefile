@@ -443,6 +443,9 @@ define Build/InstallDev
 	rm -f $(1)/usr/include/mac80211-backport/linux/module.h
 endef
 
+# mt76 configures against headers exported by mac80211.
+compile: $(STAMP_INSTALLED)
+
 
 define KernelPackage/cfg80211/install
 	$(INSTALL_DIR) $(1)/lib/wifi $(1)/lib/netifd/wireless
