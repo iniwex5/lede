@@ -71,7 +71,7 @@ HOST_MAKE_FLAGS += \
 	am__CONFIG_DISTCLEAN_FILES= \
 	DEFAULT_INCLUDES='-iquote . -I$$$$(top_builddir) -I$$$$(top_srcdir)/$(PKG_GNULIB_BASE)' \
 	AM_LDFLAGS='$$$$(STACK_USAGE_NO_ERROR)' \
-	LIBS+='$$$$(if $$$$(findstring $(lastword $(PKG_SUBDIRS)),$$$$(subdir)), $$$$($(PKG_GNULIB_BASE)))' \
+	LIBS+='$$$$(libgnu)' \
 	LIBS+='$$$$(wildcard $$$$($(PKG_GNULIB_BASE)_exitfail))' \
 	LIBS+='$$$$(wildcard $$$$($(PKG_GNULIB_BASE)_fallocate-posix))' \
 	LIBS+='$$$$(wildcard $$$$($(PKG_GNULIB_BASE)_mbszero))' \
@@ -95,6 +95,7 @@ ifeq ($(HOST_OS),Darwin)
   HOST_CPPFLAGS += -I$(shell brew --prefix gettext)/include
   HOST_LDFLAGS += -L$(shell brew --prefix gettext)/lib
   HOST_CONFIGURE_ARGS += --with-libintl-prefix=$(shell brew --prefix gettext)
+  HOST_MAKE_FLAGS += LIBS+=-lintl
   ELFUTILS_DARWIN_CONFIG_FIXUP = $(SED) '/extern __typeof (name) aliasname/s/__attribute__.*/;/' lib/eu-config.h; $(SED) '/extern __typeof__ (name) __/s/__attribute__.*/;/' lib/eu-config.h; $(SED) '/^noinst_DATA = /s/.*/noinst_DATA =/' libelf/Makefile.am libdw/Makefile.am; $(SED) 's/^install: install-am libelf.so/install: install-am/' libelf/Makefile.am; $(SED) 's/^install: install-am libdw.so/install: install-am/' libdw/Makefile.am;
 endif
 
