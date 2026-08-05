@@ -122,14 +122,4 @@ HOST_CONFIGURE_VARS += \
 Hooks/HostConfigure/Pre := Host/Gnulib/Prepare $(Hooks/HostConfigure/Pre)
 Hooks/HostCompile/Pre := Host/Gnulib/Compile $(Hooks/HostCompile/Pre)
 
-define Host/Configure
-	$(call Host/Configure/Default)
-	$(call Host/Uninstall)
-endef
-
-define Host/Uninstall
-	-$(call Host/Compile/Default,uninstall)
-	-$(call Host/Compile/Default,maintainer-clean) # Clean bootstrap files from the release
-endef
-
 $(eval $(call HostBuild))
