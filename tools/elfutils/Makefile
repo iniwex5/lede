@@ -124,6 +124,12 @@ Hooks/HostCompile/Pre := Host/Gnulib/Compile $(Hooks/HostCompile/Pre)
 
 define Host/Configure
 	(cd $(HOST_BUILD_DIR); \
+		if ! $(GREP) -q 'gl_EARLY' configure.ac; then \
+			$(SED) -i '/AM_SILENT_RULES/a gl_EARLY' configure.ac; \
+			$(SED) -i '/AC_PROG_CXX/a gl_INIT' configure.ac; \
+			$(SED) -i '/config\/Makefile/a AC_CONFIG_FILES([libgnu/Makefile])' configure.ac; \
+			$(SED) -i '/^SUBDIRS = /s/= /= libgnu /' Makefile.am; \
+		fi; \
 		AUTOM4TE=$(STAGING_DIR_HOST)/bin/autom4te \
 		AUTOCONF=$(STAGING_DIR_HOST)/bin/autoconf \
 		AUTOMAKE=$(STAGING_DIR_HOST)/bin/automake \
@@ -133,6 +139,10 @@ define Host/Configure
 		M4=$(STAGING_DIR_HOST)/bin/m4 \
 		$(STAGING_DIR_HOST)/bin/autoreconf -v -f -i -s -B $(STAGING_DIR_HOST)/share/aclocal -I m4 -I .)
 	$(call Host/Configure/Default)
+endef
+
+define Host/Compile
+	$(call Host/Compile/Default,SUBDIRS='$(PKG_SUBDIRS)')
 endef
 
 $(eval $(call HostBuild))
