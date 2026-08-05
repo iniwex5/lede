@@ -95,7 +95,7 @@ ifeq ($(HOST_OS),Darwin)
   HOST_CPPFLAGS += -I$(shell brew --prefix gettext)/include
   HOST_LDFLAGS += -L$(shell brew --prefix gettext)/lib
   HOST_CONFIGURE_ARGS += --with-libintl-prefix=$(shell brew --prefix gettext)
-  ELFUTILS_DARWIN_CONFIG_FIXUP = $(SED) '/extern __typeof (name) aliasname/s/__attribute__.*/;/' lib/eu-config.h; $(SED) '/extern __typeof__ (name) __/s/__attribute__.*/;/' lib/eu-config.h;
+  ELFUTILS_DARWIN_CONFIG_FIXUP = $(SED) '/extern __typeof (name) aliasname/s/__attribute__.*/;/' lib/eu-config.h; $(SED) '/extern __typeof__ (name) __/s/__attribute__.*/;/' lib/eu-config.h; $(SED) '/^noinst_DATA = /s/.*/noinst_DATA =/' libelf/Makefile.am libdw/Makefile.am; $(SED) 's/^install: install-am libelf.so/install: install-am/' libelf/Makefile.am; $(SED) 's/^install: install-am libdw.so/install: install-am/' libdw/Makefile.am;
 endif
 
 HOST_CFLAGS += -Wno-error -fPIC -std=gnu17
@@ -149,6 +149,10 @@ endef
 
 define Host/Compile
 	$(call Host/Compile/Default,SUBDIRS='$(PKG_SUBDIRS)')
+endef
+
+define Host/Install
+	$(call Host/Compile/Default,SUBDIRS='$(PKG_SUBDIRS)' install)
 endef
 
 $(eval $(call HostBuild))
