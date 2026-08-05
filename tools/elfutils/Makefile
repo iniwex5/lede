@@ -124,11 +124,11 @@ Hooks/HostCompile/Pre := Host/Gnulib/Compile $(Hooks/HostCompile/Pre)
 
 define Host/Configure
 	(cd $(HOST_BUILD_DIR); \
-		if ! $(GREP) -q 'gl_EARLY' configure.ac; then \
-			$(SED) -i '/AM_SILENT_RULES/a gl_EARLY' configure.ac; \
-			$(SED) -i '/AC_PROG_CXX/a gl_INIT' configure.ac; \
-			$(SED) -i '/config\/Makefile/a AC_CONFIG_FILES([libgnu/Makefile])' configure.ac; \
-			$(SED) -i '/^SUBDIRS = /s/= /= libgnu /' Makefile.am; \
+		if ! grep -q 'gl_EARLY' configure.ac; then \
+			$(SED) '/AM_SILENT_RULES/a gl_EARLY' configure.ac; \
+			$(SED) '/AC_PROG_CXX/a gl_INIT' configure.ac; \
+			$(SED) '/config\/Makefile/a AC_CONFIG_FILES([libgnu/Makefile])' configure.ac; \
+			$(SED) '/^SUBDIRS = /s/= /= libgnu /' Makefile.am; \
 		fi; \
 		AUTOM4TE=$(STAGING_DIR_HOST)/bin/autom4te \
 		AUTOCONF=$(STAGING_DIR_HOST)/bin/autoconf \
