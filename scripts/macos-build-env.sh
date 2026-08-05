@@ -24,3 +24,7 @@ for gnu_path in "${gnu_paths[@]}"; do
 done
 
 export PATH
+
+# Apple Clang lacks the __thread support required by tools/elfutils.
+export CC="${CC:-gcc-11}"
+export CXX="${CXX:-g++-11}"
